@@ -2,7 +2,7 @@
 // @name        Youtube sticky Show Less
 // @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling such description.
 // @namespace   https://github.com/t1ml3arn-userscript-js
-// @version     1.0.1
+// @version     1.0.2
 // @match				https://www.youtube.com/*
 // @match       https://youtube.com/*
 // @grant       none
@@ -138,8 +138,21 @@ async function init() {
 
 	addCss(STICKY_STYLESHEET_CONTENT, STICKY_STYLE_ELT_ID)
 
-	saveDescriptionHeight()
-	
+	// NOTE youtube navigation event hint was found there:
+	// there https://stackoverflow.com/questions/34077641/how-to-detect-page-navigation-on-youtube-and-modify-its-appearance-seamlessly/34100952#34100952
+
+	document.addEventListener('yt-navigate-start', _ => {
+		waitElement.timeouts.forEach(clearTimeout)
+		waitElement.timeouts = []
+
+		waitElement.intervals.forEach(clearInterval)
+		waitElement.intervals = []
+	})
+
+	document.addEventListener('yt-navigate-finish', saveDescriptionHeight)
+
+	await saveDescriptionHeight()
+
 	// youtube SHOW LESS button
 	const showLessBtn = (await waitElement('tp-yt-paper-button#less > yt-formatted-string.ytd-video-secondary-info-renderer')).parentElement
 
@@ -155,19 +168,6 @@ async function init() {
 	
 	// add sticky wrapper (with showless button) to video description element
 	(await waitElement('ytd-expander.ytd-video-secondary-info-renderer')).appendChild(stickyWrap);
-
-	// NOTE youtube navigation event hint was found there:
-	// there https://stackoverflow.com/questions/34077641/how-to-detect-page-navigation-on-youtube-and-modify-its-appearance-seamlessly/34100952#34100952
-
-	document.addEventListener('yt-navigate-start', _ => {
-		waitElement.timeouts.forEach(clearTimeout)
-		waitElement.timeouts = []
-
-		waitElement.intervals.forEach(clearInterval)
-		waitElement.intervals = []
-	})
-
-	document.addEventListener('yt-navigate-finish', saveDescriptionHeight)
 }
 
 init()
