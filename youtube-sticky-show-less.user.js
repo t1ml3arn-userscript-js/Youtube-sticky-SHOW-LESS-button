@@ -54,7 +54,7 @@ function addCss(css, id) {
 	style.id = id;
 }
 
-function waitElement(selector, timeout=10000, freq = 500) {
+function waitElement(selector, timeout=15000, freq=500) {
 	const elt = document.querySelector(selector)
 	if (elt)	
 		return Promise.resolve(elt)
@@ -71,13 +71,18 @@ function waitElement(selector, timeout=10000, freq = 500) {
 					resolve(elt)
 				}
 			}, freq);
-
+			
 			timeoutId = setTimeout(() => {
 				clearInterval(intervalId)
 				reject(`Cannot find element "${selector}" (timeout ${timeout})`)
 			}, timeout);
+			
+			waitElement.intervals.push(intervalId)
+			waitElement.timeouts.push(timeoutId)
 		})
 }
+waitElement.intervals = [];
+waitElement.timeouts = [];
 
 function fixScroll() {
 	
@@ -123,14 +128,18 @@ function scrollDescriptionIntoView() {
 
 let descriptionHeight;
 
+async function saveDescriptionHeight() {
+	// saving initial description elt height (it is needed to fix scroll position)
+	const descriptionElt = await waitElement('ytd-video-secondary-info-renderer')
+	descriptionHeight = descriptionElt.getBoundingClientRect().height;
+}
+
 async function init() {	
 
 	addCss(STICKY_STYLESHEET_CONTENT, STICKY_STYLE_ELT_ID)
 
-	// saving initial description elt height (it is needed to fix scroll position)
-	const descriptionElt = await waitElement('ytd-video-secondary-info-renderer')
-	descriptionHeight = descriptionElt.getBoundingClientRect().height;
-
+	saveDescriptionHeight()
+	
 	// youtube SHOW LESS button
 	const showLessBtn = (await waitElement('tp-yt-paper-button#less > yt-formatted-string.ytd-video-secondary-info-renderer')).parentElement
 
@@ -145,7 +154,20 @@ async function init() {
 	stickyWrap.appendChild(btnWrap);		// NOTE ; at the end, because of the next (await ...) command
 	
 	// add sticky wrapper (with showless button) to video description element
-	(await waitElement('ytd-expander')).appendChild(stickyWrap);
+	(await waitElement('ytd-expander.ytd-video-secondary-info-renderer')).appendChild(stickyWrap);
+
+	// NOTE youtube navigation event hint was found there:
+	// there https://stackoverflow.com/questions/34077641/how-to-detect-page-navigation-on-youtube-and-modify-its-appearance-seamlessly/34100952#34100952
+
+	document.addEventListener('yt-navigate-start', _ => {
+		waitElement.timeouts.forEach(clearTimeout)
+		waitElement.timeouts = []
+
+		waitElement.intervals.forEach(clearInterval)
+		waitElement.intervals = []
+	})
+
+	document.addEventListener('yt-navigate-finish', saveDescriptionHeight)
 }
 
 init()
