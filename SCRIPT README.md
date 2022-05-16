@@ -1,10 +1,8 @@
-`README.md` for completed script
-
-# Script Name 
+# Youtube sticky SHOW LESS button
 
 ## Description
 
-Tell what the script does
+Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling such description.
 
 ## Screenshots
 
