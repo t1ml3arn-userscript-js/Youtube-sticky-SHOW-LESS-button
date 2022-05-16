@@ -7,6 +7,7 @@
 // @match       https://youtube.com/*
 // @grant       none
 // @author      T1mL3arn
+// @license			GPLv3
 // ==/UserScript==
 
 

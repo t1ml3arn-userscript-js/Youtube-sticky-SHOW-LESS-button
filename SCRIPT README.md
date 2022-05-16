@@ -23,4 +23,4 @@ It can be a `Node.js` project, thus it is good to have more details about the de
 
 ## License
 
-Project license
+GPLv3
