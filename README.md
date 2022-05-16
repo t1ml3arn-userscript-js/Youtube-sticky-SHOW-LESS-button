@@ -1,23 +1,24 @@
-# Userscript metadata block templates
+# Youtube sticky SHOW LESS button
 
-The repo has metadata templates for [userscripts](https://en.wikipedia.org/wiki/Userscript). Metadata section describes a script (its name, version etc) and usually present at the top of the userscript file. Userscripts are run by special browser extension.
+## Description
 
+Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
 
-## Metadata compatibility
+## Screenshots
 
-Along with standard keys, some extensions support uniques. Refer to their documentation to know more:
+![youtube sticky show less button](./youtube_sticky show_less_button.gif)
 
-- Greasemonkey [metadata keys](https://wiki.greasespot.net/Metadata_Block). These keys should work in any userscript extension.
-- Violentmonkey [metadata keys](https://violentmonkey.github.io/api/metadata-block/).
-- Tampermonkey [metadata keys](https://www.tampermonkey.net/documentation.php#metadata). This extension has quite a lot of unique keys.
-- greasyfork.org [metadata keys](https://greasyfork.org/en/help/meta-keys). While this is not an extension but a place to host userscripts, it also supports several unique keys, so if you want to publish your script there, it is worth to use them.
+## How to install the script
 
+1. Install one of these browser extensions: [Violentmonkey](https://violentmonkey.github.io/get-it/) / [Greasemonkey](https://www.greasespot.net/) / [Tampermonkey](https://tampermonkey.net/)
+2. Go to the script [page](REPLACE_IT_WITH_THE_LINK_TO_YOUR_SCRIPT_ON_GREASYFORK.ORG)
+3. Press **Install this script** button
+4. Confirm the installation
+
+## Development
+
+It can be a `Node.js` project, thus it is good to have more details about the development process.
 
 ## License
 
-Copyright © 2020 T1mL3arn
-
-This work is free. You can redistribute it and/or modify it under the
-terms of the Do What The Fuck You Want To Public License, Version 2,
-as published by Sam Hocevar. See the [full WTFPL text](http://www.wtfpl.net/txt/copying/) for more details.
-
+GPLv3
