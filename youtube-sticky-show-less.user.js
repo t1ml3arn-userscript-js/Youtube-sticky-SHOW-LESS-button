@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name        Youtube sticky Show Less
-// @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling such description.
+// @name        Youtube sticky Show Less button
+// @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
 // @namespace   https://github.com/t1ml3arn-userscript-js
-// @version     1.0.2
+// @version     1.0.3
 // @match				https://www.youtube.com/*
 // @match       https://youtube.com/*
 // @grant       none
