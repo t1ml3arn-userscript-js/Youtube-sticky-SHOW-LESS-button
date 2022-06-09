@@ -120,7 +120,7 @@ function scrollDescriptionIntoView() {
 
 let descriptionHeight;
 
-async function saveDescriptionHeight() {
+function saveDescriptionHeight() {
 	// saving initial description elt height (it is needed to fix scroll position)
 	const descriptionElt = document.querySelector('ytd-video-secondary-info-renderer')
 	descriptionHeight = descriptionElt.getBoundingClientRect().height;
@@ -150,8 +150,14 @@ function init() {
 
 	// Looks like 'yt-page-data-updated' is the event I need to listen
 	// to know exactly when youtube markup is ready to be queried.
-	document.addEventListener('yt-page-data-updated', saveDescriptionHeight)
-	document.addEventListener('yt-page-data-updated', enchanceShowLessButton)
+	document.addEventListener('yt-page-data-updated', _ => {
+		// Script should work only for pages with a video,
+		// such pages have url like https://www.youtube.com/watch?v=25YbRHAc_h4
+		if (window.location.search.includes('v=')) {
+			saveDescriptionHeight()
+			enchanceShowLessButton()
+		}
+	})
 }
 
 init()
