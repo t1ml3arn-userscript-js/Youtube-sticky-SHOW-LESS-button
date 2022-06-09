@@ -27,6 +27,8 @@ Copyright (C) 2022  T1mL3arn
 // @match       https://youtube.com/*
 // @grant       none
 // @author      T1mL3arn
+// @homepageURL	https://github.com/t1ml3arn-userscript-js/Youtube-sticky-SHOW-LESS-button
+// @supportURL	https://github.com/t1ml3arn-userscript-js/Youtube-sticky-SHOW-LESS-button/issues
 // @license			GPL-3.0-only
 // ==/UserScript==
 
