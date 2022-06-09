@@ -6,7 +6,7 @@ Makes SHOW LESS button to be "sticky" to the video description section, so you c
 
 ## Screenshots
 
-![youtube sticky show less button](/youtube_sticky_show_less_button.gif)
+![youtube sticky show less button](https://github.com/t1ml3arn-userscript-js/Youtube-sticky-SHOW-LESS-button/raw/master/youtube_sticky_show_less_button.gif)
 
 ## How to install the script
 
