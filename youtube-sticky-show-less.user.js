@@ -1,3 +1,22 @@
+/* 
+	Youtube sticky Show Less button: Makes SHOW LESS button to be "sticky" 
+	to the video description section, so you can easily fold a long description 
+	without scrolling it all the way to its bottom.
+Copyright (C) 2022  T1mL3arn
+
+	This program is free software: you can redistribute it and/or modify
+	it under the terms of the GNU General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+	This program is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU General Public License for more details.
+	You should have received a copy of the GNU General Public License
+	along with this program. If not, see <https://www.gnu.org/licenses/>.
+*/
+
 // ==UserScript==
 // @name        Youtube sticky Show Less button
 // @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
@@ -7,7 +26,7 @@
 // @match       https://youtube.com/*
 // @grant       none
 // @author      T1mL3arn
-// @license			GPLv3
+// @license			GPL-3.0-only
 // ==/UserScript==
 
 
