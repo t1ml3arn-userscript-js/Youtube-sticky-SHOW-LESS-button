@@ -15,10 +15,6 @@ Makes SHOW LESS button to be "sticky" to the video description section, so you c
 3. Press **Install this script** button
 4. Confirm the installation
 
-## Development
-
-It can be a `Node.js` project, thus it is good to have more details about the development process.
-
 ## License
 
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0-standalone.html)
