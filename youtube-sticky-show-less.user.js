@@ -22,7 +22,7 @@ Copyright (C) 2022  T1mL3arn
 // @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
 // @description:RU Делает кнопку СВЕРНУТЬ в описании видео "липкой". Чтобы свернуть длинное описание теперь не нужно прокручивать это описание в самый низ.
 // @namespace   https://github.com/t1ml3arn-userscript-js
-// @version     1.1.0
+// @version     1.1.1
 // @match				https://www.youtube.com/*
 // @match       https://youtube.com/*
 // @grant       none
