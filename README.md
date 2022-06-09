@@ -11,7 +11,7 @@ Makes SHOW LESS button to be "sticky" to the video description section, so you c
 ## How to install the script
 
 1. Install one of these browser extensions: [Violentmonkey](https://violentmonkey.github.io/get-it/) / [Greasemonkey](https://www.greasespot.net/) / [Tampermonkey](https://tampermonkey.net/)
-2. Go to the script [page](REPLACE_IT_WITH_THE_LINK_TO_YOUR_SCRIPT_ON_GREASYFORK.ORG)
+2. Go to the script [page](https://greasyfork.org/scripts/446269-youtube-sticky-show-less-button)
 3. Press **Install this script** button
 4. Confirm the installation
 
