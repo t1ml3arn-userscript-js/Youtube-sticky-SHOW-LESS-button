@@ -22,7 +22,7 @@
 // @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
 // @description:RU Делает кнопку СВЕРНУТЬ в описании видео "липкой". Чтобы свернуть длинное описание теперь не нужно прокручивать это описание в самый низ.
 // @namespace   https://github.com/t1ml3arn-userscript-js
-// @version     1.2.1
+// @version     1.2.2
 // @match				https://www.youtube.com/*
 // @match       https://youtube.com/*
 // @noframes
@@ -153,17 +153,11 @@ function saveDescriptionHeight() {
 	// at saveDescriptionHeight() call height might be not actual,
 	// and delaying the reading helps
 	setTimeout(() => {
-		console.debug('timeout')
-		var h = document.querySelector(SETTINGS.videoDescriptionSelector).getBoundingClientRect().height
-		console.debug(h)
-		descriptionHeight = h
+		descriptionHeight = document.querySelector(SETTINGS.videoDescriptionSelector).getBoundingClientRect().height
 	}, 0);
 }
 
 function enchanceShowLessButton() {
-	// youtube SHOW LESS button
-	// const showLessBtn = document.querySelector('tp-yt-paper-button#collapse')
-
 	for (const showLessBtn of document.querySelectorAll('tp-yt-paper-button#collapse')) {
 		const showLessParent = showLessBtn.parentElement
 	
