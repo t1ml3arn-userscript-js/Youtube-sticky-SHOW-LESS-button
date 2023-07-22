@@ -15,6 +15,10 @@ Makes SHOW LESS button to be "sticky" to the video description section, so you c
 3. Press **Install this script** button
 4. Confirm the installation
 
+## Test
+
+Check this [video](https://www.youtube.com/watch?v=l8GQhLpYwXs) to see the script in action.
+
 ## License
 
 [GPLv3](https://www.gnu.org/licenses/gpl-3.0-standalone.html)

@@ -22,7 +22,7 @@
 // @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
 // @description:RU Делает кнопку СВЕРНУТЬ в описании видео "липкой". Чтобы свернуть длинное описание теперь не нужно прокручивать это описание в самый низ.
 // @namespace   https://github.com/t1ml3arn-userscript-js
-// @version     1.2.0
+// @version     1.2.1
 // @match				https://www.youtube.com/*
 // @match       https://youtube.com/*
 // @noframes
@@ -162,21 +162,25 @@ function saveDescriptionHeight() {
 
 function enchanceShowLessButton() {
 	// youtube SHOW LESS button
-	const showLessBtn = document.querySelector('tp-yt-paper-button#collapse')
-	const showLessParent = showLessBtn.parentElement
+	// const showLessBtn = document.querySelector('tp-yt-paper-button#collapse')
 
-	// I use wrap to intercept clicks in CAPTURE phase
-	// to calcalute scroll offset BEFORE youtube hides the description
-	const btnWrap = document.createElement('div')
-	btnWrap.appendChild(showLessBtn)
-	btnWrap.addEventListener('click', fixScroll, true)
+	for (const showLessBtn of document.querySelectorAll('tp-yt-paper-button#collapse')) {
+		const showLessParent = showLessBtn.parentElement
+	
+		const btnWrap = document.createElement('div')
+		btnWrap.appendChild(showLessBtn)
+		// I use wrap to intercept clicks in CAPTURE phase
+		// to calcalute scroll offset BEFORE youtube hides the description
+		btnWrap.addEventListener('click', fixScroll, true)
+	
+		const stickyWrap = document.createElement('div');
+		stickyWrap.classList.add(SHOWLESS_BTN_WRAP_CLS)
+		stickyWrap.appendChild(btnWrap);
+	
+		// add sticky wrapper (with showless button) to video description element
+		showLessParent.appendChild(stickyWrap)
+	}
 
-	const stickyWrap = document.createElement('div');
-	stickyWrap.classList.add(SHOWLESS_BTN_WRAP_CLS)
-	stickyWrap.appendChild(btnWrap);
-
-	// add sticky wrapper (with showless button) to video description element
-	showLessParent.appendChild(stickyWrap)
 }
 
 function init() {	
