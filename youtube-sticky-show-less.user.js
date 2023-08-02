@@ -22,7 +22,7 @@
 // @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
 // @description:RU Делает кнопку СВЕРНУТЬ в описании видео "липкой". Чтобы свернуть длинное описание теперь не нужно прокручивать это описание в самый низ.
 // @namespace   https://github.com/t1ml3arn-userscript-js
-// @version     1.2.2
+// @version     1.3.0
 // @match				https://www.youtube.com/*
 // @match       https://youtube.com/*
 // @noframes
@@ -67,17 +67,6 @@ const STICKY_STYLESHEET_CONTENT = `
 	z-index: 999;
 }
 
-ytd-video-secondary-info-renderer tp-yt-paper-button#less.ytd-expander {
-	pointer-events: initial;
-	padding: 6px 16px;
-	background: darkseagreen;
-}
-
-ytd-video-secondary-info-renderer tp-yt-paper-button#less.ytd-expander > .less-button {
-	color: white;
-	margin-top: 0;
-}
-
 tp-yt-paper-button#collapse {
 	pointer-events: initial;
 	padding: 6px 16px;
@@ -90,6 +79,49 @@ tp-yt-paper-button#collapse {
 let SETTINGS = {
 	videoDescriptionSelector: 'ytd-video-secondary-info-renderer',
 	videoTitleSelector: 'div#info.ytd-watch-flexy',
+	showLessBtnSelector: 'ytd-expander.ytd-video-secondary-info-renderer tp-yt-paper-button#less.ytd-expander',
+}
+
+function initOldDesignSettings() {
+	const css = `
+	ytd-page-manager {
+		/* 
+		To make stickiness work I have to set "overflow: visible" on this element.
+		Without this SHOW LESS button sticks with wrong way and does not work as intended.
+		See more:
+			- https://developer.mozilla.org/en-US/docs/Web/CSS/position#sticky
+			- https://uxdesign.cc/position-stuck-96c9f55d9526#b2ca
+		*/
+		overflow: visible !important;
+	}
+	
+	.${SHOWLESS_BTN_WRAP_CLS} {
+		position: sticky;
+		bottom: 50px;
+		text-align: right;
+		bottom: 50%;
+		pointer-events: none;
+	}
+	
+	ytd-video-secondary-info-renderer tp-yt-paper-button#less.ytd-expander {
+		pointer-events: initial;
+		padding: 6px 16px;
+		background: darkseagreen;
+	}
+	
+	ytd-video-secondary-info-renderer tp-yt-paper-button#less.ytd-expander > .less-button {
+		color: white;
+		margin-top: 0;
+	}
+	
+	`;
+	SETTINGS =  {
+		...SETTINGS, 
+		videoDescriptionSelector: 'ytd-video-secondary-info-renderer',
+		videoTitleSelector: 'div#info.ytd-watch-flexy',
+		showLessBtnSelector: 'ytd-expander.ytd-video-secondary-info-renderer tp-yt-paper-button#less.ytd-expander',
+		css,
+	}
 }
 
 function addCss(css, id) {
@@ -158,7 +190,7 @@ function saveDescriptionHeight() {
 }
 
 function enchanceShowLessButton() {
-	for (const showLessBtn of document.querySelectorAll('tp-yt-paper-button#collapse')) {
+	for (const showLessBtn of document.querySelectorAll(SETTINGS.showLessBtnSelector)) {
 		const showLessParent = showLessBtn.parentElement
 	
 		const btnWrap = document.createElement('div')
@@ -179,21 +211,39 @@ function enchanceShowLessButton() {
 
 function init() {	
 
-	addCss(STICKY_STYLESHEET_CONTENT, STICKY_STYLE_ELT_ID)
-
-	SETTINGS = {
-		videoDescriptionSelector: '#above-the-fold.ytd-watch-metadata',
-		videoTitleSelector: '#above-the-fold.ytd-watch-metadata',
-	}
-
 	// Looks like 'yt-page-data-updated' is the event I need to listen
 	// to know exactly when youtube markup is ready to be queried.
 	document.addEventListener('yt-page-data-updated', _ => {
 		// Script should work only for pages with a video,
 		// such pages have url like https://www.youtube.com/watch?v=25YbRHAc_h4
 		if (window.location.search.includes('v=')) {
+
+			// settings for the actual design
+			SETTINGS = {
+				videoDescriptionSelector: '#above-the-fold.ytd-watch-metadata',
+				videoTitleSelector: '#above-the-fold.ytd-watch-metadata',
+				showLessBtnSelector: 'tp-yt-paper-button#collapse',
+				css: STICKY_STYLESHEET_CONTENT,
+			}
+			
+			addCss(SETTINGS.css, STICKY_STYLE_ELT_ID)
 			saveDescriptionHeight()
 			enchanceShowLessButton()
+
+			setTimeout(() => {
+				// if for some reason there is old design in use
+
+				const elt = document.querySelector('ytd-video-secondary-info-renderer.ytd-watch-flexy')
+				if (elt?.offsetParent != null) {
+					console.log('OLD design detected');
+
+					initOldDesignSettings()
+					document.getElementById(STICKY_STYLE_ELT_ID).remove();
+					addCss(SETTINGS.css, STICKY_STYLE_ELT_ID)
+					saveDescriptionHeight()
+					enchanceShowLessButton()
+				}
+			}, 125);
 		}
 	})
 }
