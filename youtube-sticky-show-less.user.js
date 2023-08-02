@@ -22,7 +22,7 @@
 // @description Makes SHOW LESS button to be "sticky" to the video description section, so you can easily fold a long description without scrolling it all the way to its bottom.
 // @description:RU Делает кнопку СВЕРНУТЬ в описании видео "липкой". Чтобы свернуть длинное описание теперь не нужно прокручивать это описание в самый низ.
 // @namespace   https://github.com/t1ml3arn-userscript-js
-// @version     1.3.0
+// @version     1.3.1
 // @match				https://www.youtube.com/*
 // @match       https://youtube.com/*
 // @noframes
@@ -227,8 +227,11 @@ function init() {
 			}
 			
 			addCss(SETTINGS.css, STICKY_STYLE_ELT_ID)
-			saveDescriptionHeight()
-			enchanceShowLessButton()
+
+			try {
+				saveDescriptionHeight()
+				enchanceShowLessButton()
+			} catch (e) {}
 
 			setTimeout(() => {
 				// if for some reason there is old design in use
@@ -238,7 +241,7 @@ function init() {
 					console.log('OLD design detected');
 
 					initOldDesignSettings()
-					document.getElementById(STICKY_STYLE_ELT_ID).remove();
+					document.getElementById(STICKY_STYLE_ELT_ID)?.remove();
 					addCss(SETTINGS.css, STICKY_STYLE_ELT_ID)
 					saveDescriptionHeight()
 					enchanceShowLessButton()
